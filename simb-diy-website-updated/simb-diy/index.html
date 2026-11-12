@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c2a57">
+<meta name="description" content="SIMB DIY: informasi mitigasi banjir Daerah Istimewa Yogyakarta, data BPBD DIY, peta, dan kontak darurat.">
+<title>SIMB DIY – Sistem Informasi Mitigasi Banjir Yogyakarta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+</head>
+<body>
+<div class="sos"><div class="container d-flex justify-content-center flex-wrap gap-3"><span><i class="bi bi-exclamation-triangle-fill me-1"></i>Keadaan darurat?</span><a href="tel:112">Panggil 112</a><a href="tel:117">BNPB 117</a><a href="tel:115">Basarnas 115</a><a href="tel:119">Ambulans 119</a></div></div>
+<div id="alertBar"></div>
+<nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom">
+ <div class="container">
+  <a class="navbar-brand d-flex align-items-center gap-2" href="#beranda"><i class="bi bi-droplet-half text-brand fs-4"></i>SIMB <span class="badge bg-primary-subtle text-primary-emphasis">DIY</span></a>
+  <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu" aria-label="Menu"><span class="navbar-toggler-icon"></span></button>
+  <div class="collapse navbar-collapse" id="menu">
+   <ul class="navbar-nav mx-auto gap-lg-3">
+    <li><a class="nav-link" href="#beranda">Beranda</a></li><li><a class="nav-link" href="#intro">Mengenal Banjir</a></li>
+    <li><a class="nav-link" href="#mitigasi">Mitigasi</a></li><li><a class="nav-link" href="#artikel">Artikel</a></li>
+    <li><a class="nav-link" href="#peta">Peta</a></li><li><a class="nav-link" href="#statistik">Statistik</a></li><li><a class="nav-link" href="#lapor">Lapor</a></li><li><a class="nav-link" href="#kontak">Kontak</a></li>
+   </ul>
+   <a href="tel:117" class="btn btn-brand"><i class="bi bi-telephone-fill me-2"></i>Darurat 117</a>
+  </div>
+ </div>
+</nav>
+
+<header id="beranda" class="hero"><div class="container"><div class="row align-items-center">
+ <div class="col-lg-6 py-5">
+  <span class="eyebrow">Daerah Istimewa Yogyakarta</span>
+  <h1 class="display-4 text-white mt-3">Siaga banjir di Yogyakarta <span class="accent">dimulai dari kita.</span></h1>
+  <p class="lead text-white-50 my-4">Informasi banjir untuk warga Kota Yogyakarta, Sleman, Bantul, Kulon Progo, dan Gunungkidul: mitigasi, data BPBD DIY, peta kejadian, hingga kontak darurat.</p>
+  <div class="d-flex gap-3 flex-wrap"><a href="#mitigasi" class="btn btn-light btn-lg">Pelajari Mitigasi <i class="bi bi-arrow-right ms-1"></i></a><a href="#kontak" class="btn btn-outline-light btn-lg">Kontak Darurat</a></div>
+ </div>
+ <div class="col-lg-6 d-none d-lg-block"><div class="hero-img" role="img" aria-label="Ilustrasi desa yang terkena banjir"></div></div>
+</div></div></header>
+
+<div class="container"><div class="stat-float row g-0 text-center">
+ <div class="col-3"><i class="bi bi-water"></i><b data-count="41">0</b><span>Kejadian banjir di DIY, Desember 2025</span></div>
+ <div class="col-3"><i class="bi bi-geo-alt"></i><b data-count="5">0</b><span>Kabupaten/kota se-DIY</span></div>
+ <div class="col-3"><i class="bi bi-bar-chart"></i><b data-count="1418">0</b><span>Kejadian bencana di DIY, 2023</span></div>
+ <div class="col-3"><i class="bi bi-telephone"></i><b data-count="7">0</b><span>Nomor darurat nasional</span></div>
+</div></div>
+
+<section id="intro" class="section"><div class="container"><div class="row g-5 align-items-center">
+ <div class="col-lg-6">
+  <span class="eyebrow dark">Mengenal Banjir</span><h2 class="title">Pahami banjir sebelum terjadi</h2>
+  <ul class="nav nav-pills gap-2 mb-3" id="introTabs"></ul><div class="card-soft p-4" id="introBody"></div>
+ </div>
+ <div class="col-lg-6"><div class="photo ratio ratio-4x3" role="img" aria-label="Ilustrasi sungai meluap"></div></div>
+</div></div></section>
+
+<section id="mitigasi" class="section pt-0"><div class="container">
+ <div class="text-center mb-5"><span class="eyebrow dark">Mitigasi &amp; Kesiapsiagaan</span><h2 class="title">Tiga tahap menghadapi banjir</h2></div>
+ <div class="row g-4" id="tahap"></div>
+ <div class="band p-5 mt-5"><div class="row g-4 align-items-center">
+  <div class="col-lg-4"><span class="eyebrow">Tingkat Kewaspadaan</span><h3 class="mt-2">Kenali level peringatan</h3><p class="text-white-50 mb-3">Pantau status terbaru di wilayah Anda dari BMKG dan BPBD setempat.</p><a class="btn btn-light" href="https://www.bmkg.go.id" target="_blank" rel="noopener">Buka BMKG <i class="bi bi-box-arrow-up-right ms-1"></i></a></div>
+  <div class="col-lg-8"><div class="row g-3">
+   <div class="col-md-4"><div class="level lv1"><i class="bi bi-eye"></i><h5>Waspada</h5><p>Cuaca ekstrem berpotensi terjadi. Pantau informasi dan cek tas siaga.</p></div></div>
+   <div class="col-md-4"><div class="level lv2"><i class="bi bi-exclamation-triangle"></i><h5>Siaga</h5><p>Debit air naik. Amankan barang penting dan bersiap mengungsi.</p></div></div>
+   <div class="col-md-4"><div class="level lv3"><i class="bi bi-sign-stop"></i><h5>Awas</h5><p>Banjir segera terjadi. Evakuasi sesuai arahan petugas.</p></div></div>
+  </div></div>
+ </div></div>
+</div></section>
+
+<section class="section pt-0"><div class="container"><div class="row g-0 rounded-4 overflow-hidden shadow-soft">
+ <div class="col-lg-5"><div class="photo h-100 rounded-0" style="min-height:320px;background-image:url(img/tas-siaga.svg)" role="img" aria-label="Ilustrasi tas siaga bencana"></div></div>
+ <div class="col-lg-7 band p-5 rounded-0">
+  <span class="eyebrow">Tas Siaga Bencana</span><h2 class="mt-2">Checklist persiapan keluarga</h2>
+  <div class="progress my-3" style="height:8px"><div class="progress-bar" id="ckBar" style="width:0"></div></div>
+  <p class="small text-white-50" id="ckText"></p><div class="row" id="ckList"></div>
+ </div>
+</div></div></section>
+
+<section id="artikel" class="section pt-0"><div class="container">
+ <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+  <div><span class="eyebrow dark">Berita &amp; Artikel</span><h2 class="title mb-0">Berita terbaru &amp; edukasi</h2></div><div class="d-flex gap-2 flex-wrap align-items-center"><input id="cari" class="form-control form-control-sm cari" type="search" placeholder="Cari berita..." aria-label="Cari berita"><span class="d-flex gap-2 flex-wrap" id="filter"></span></div>
+ </div>
+ <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+  <span class="small text-secondary" id="newsStatus" aria-live="polite">Memuat berita terbaru…</span>
+  <button class="btn btn-outline-primary btn-sm" id="refreshNews" type="button"><i class="bi bi-arrow-clockwise me-1"></i>Perbarui berita</button>
+ </div>
+ <div class="row g-4" id="artList"></div>
+ <p class="small text-secondary mt-4 mb-0">Berita otomatis dihimpun dari pencarian berita terbaru. Klik <b>Baca berita asli</b> untuk membuka artikel di situs penerbitnya. Pembaruan otomatis setiap 15 menit selama halaman terbuka. Jika layanan feed tidak tersedia, berita kurasi lokal tetap ditampilkan.</p>
+ <p class="small text-secondary mt-4 mb-0">Untuk kabar kejadian terkini, rujuk <a href="https://bnpb.go.id" target="_blank" rel="noopener">BNPB</a>, BPBD setempat, dan <a href="https://www.bmkg.go.id" target="_blank" rel="noopener">BMKG</a>.</p>
+</div></section>
+
+<section id="peta" class="section pt-0"><div class="container">
+ <div class="text-center mb-4"><span class="eyebrow dark">Peta DIY</span><h2 class="title">Sebaran banjir per kabupaten/kota</h2></div>
+ <div class="row g-4"><div class="col-lg-8"><div id="map" class="map" role="region" aria-label="Peta kejadian banjir DIY"></div></div>
+ <div class="col-lg-4"><div class="card-soft p-4 h-100"><h5>Cara membaca peta</h5>
+  <p class="small text-secondary">Lingkaran hijau menunjukkan jumlah kejadian banjir genangan dan luapan sungai pada Desember 2025 (semakin besar, semakin banyak). Klik penanda untuk detail.</p>
+  <p class="small text-secondary">Peta ini bukan peta risiko resmi dan posisi penanda adalah perkiraan. Untuk peta risiko resmi, buka InaRISK atau tanyakan ke BPBD setempat.</p>
+  <a class="btn btn-brand btn-sm" href="https://inarisk.bnpb.go.id" target="_blank" rel="noopener">Buka InaRISK <i class="bi bi-box-arrow-up-right ms-1"></i></a></div></div></div>
+</div></section>
+
+<section id="statistik" class="stat-band"><div class="container">
+ <div class="text-center mb-5"><h2 class="text-white">Kebencanaan DIY dalam Angka</h2><p class="text-white-50 mb-0">Data Pusdalops PB BPBD DIY</p></div>
+ <div class="row g-4">
+  <div class="col-lg-6"><div class="glass p-4"><h5 class="text-white mb-1">Kejadian bencana di DIY per tahun</h5><p class="small text-white-50">Semua jenis bencana: banjir, longsor, cuaca ekstrem, kebakaran, dan lainnya.</p><div class="chart" id="chart"></div></div></div>
+  <div class="col-lg-6"><div class="glass p-4 h-100"><h5 class="text-white mb-1">Banjir genangan &amp; luapan sungai, Desember 2025</h5><p class="small text-white-50">Total 41 kejadian menurut kabupaten/kota.</p><div id="bars"></div></div></div>
+ </div>
+ <div class="row g-4 mt-1">
+  <div class="col-md-4"><div class="glass p-4 text-center"><b class="big">27</b><span>kejadian banjir di DIY sepanjang 2024, di samping 262 cuaca ekstrem</span></div></div>
+  <div class="col-md-4"><div class="glass p-4 text-center"><b class="big">389</b><span>kejadian bencana di Gunungkidul pada 2023, tertinggi di DIY (Bantul 385)</span></div></div>
+  <div class="col-md-4"><div class="glass p-4 text-center"><b class="big">Imogiri</b><span>masuk peta rawan banjir DIY pada 2025 setelah banjir 2024</span></div></div>
+ </div>
+ <p class="small text-white-50 mt-4 mb-0">Sumber: BPBD DIY (bpbd.jogjaprov.go.id), buletin bulanan dan rekapitulasi tahunan. Cakupan data dapat berbeda antar-rilis, sehingga angka tahun berjalan bisa berubah.</p>
+</div></section>
+
+<section class="section"><div class="container"><div class="row g-5">
+ <div class="col-lg-6"><span class="eyebrow dark">FAQ</span><h2 class="title">Pertanyaan umum</h2><div class="accordion" id="faq"></div></div>
+ <div class="col-lg-6"><span class="eyebrow dark">Sumber Resmi</span><h2 class="title">Rujukan terpercaya</h2><div class="d-grid gap-3" id="sumber"></div></div>
+</div></div></section>
+
+<section id="lapor" class="section pt-0"><div class="container"><div class="row g-4 align-items-stretch">
+ <div class="col-lg-5"><span class="eyebrow dark">Lapor Banjir</span><h2 class="title">Lihat banjir? Kabari BPBD</h2>
+  <p class="text-secondary">Isi form singkat, lalu pesannya terkirim lewat WhatsApp ke Pusdalops BPBD DIY. Tidak ada data yang disimpan di situs ini.</p>
+  <div class="card-soft p-3 small"><i class="bi bi-info-circle text-brand me-1"></i>Untuk nyawa terancam, <b>telepon 112 atau 117</b> dulu, jangan menunggu balasan WhatsApp.</div></div>
+ <div class="col-lg-7"><form id="lapor-form" class="card-soft p-4"><div class="row g-3">
+  <div class="col-md-6"><label class="form-label fw-bold" for="kab">Kabupaten/kota</label><select class="form-select" id="kab" name="kab" required><option value="">Pilih...</option><option>Kota Yogyakarta</option><option>Sleman</option><option>Bantul</option><option>Kulon Progo</option><option>Gunungkidul</option></select></div>
+  <div class="col-md-6"><label class="form-label fw-bold" for="tinggi">Tinggi air</label><select class="form-select" id="tinggi" name="tinggi"><option>Genangan (di bawah mata kaki)</option><option>Sebetis sampai lutut</option><option>Setinggi pinggang</option><option>Lebih dari pinggang</option></select></div>
+  <div class="col-12"><label class="form-label fw-bold" for="lokasi">Lokasi lengkap</label><div class="input-group"><input class="form-control" id="lokasi" name="lokasi" placeholder="Desa, jalan, patokan terdekat" required><button class="btn btn-outline-primary" type="button" id="gps" title="Pakai lokasi saya"><i class="bi bi-crosshair"></i></button></div></div>
+  <div class="col-12"><label class="form-label fw-bold" for="kondisi">Kondisi (opsional)</label><textarea class="form-control" id="kondisi" name="kondisi" rows="2" placeholder="Mis. arus deras, ada warga terjebak"></textarea></div>
+  <div class="col-md-6"><label class="form-label" for="nama">Nama / kontak (opsional)</label><input class="form-control" id="nama" name="nama"></div>
+  <div class="col-md-6 d-flex align-items-end"><button class="btn btn-brand w-100" type="submit"><i class="bi bi-whatsapp me-2"></i>Kirim lewat WhatsApp</button></div>
+ </div></form></div>
+</div></div></section>
+
+<section id="kontak" class="section pt-0"><div class="container">
+ <div class="text-center mb-5"><span class="eyebrow dark">Kontak Darurat</span><h2 class="title">Hubungi saat terjadi banjir</h2><p class="text-secondary">Tekan nomor untuk menelepon langsung dari ponsel.</p></div>
+ <div class="row g-4" id="kontakList"></div>
+ <div class="card-soft p-4 mt-4"><h6 class="mb-3"><i class="bi bi-geo-alt-fill text-brand me-2"></i>Kontak BPBD Daerah Istimewa Yogyakarta</h6>
+ <div class="row g-3 small">
+  <div class="col-md-4"><b>Pusdalops BPBD DIY</b><br><a href="tel:0274555584">(0274) 555584</a></div>
+  <div class="col-md-4"><b>WhatsApp lapor kejadian</b><br><a href="https://wa.me/6285212863744" target="_blank" rel="noopener">0852-1286-3744</a></div>
+  <div class="col-md-4"><b>Kantor</b><br>Jl. Kenari No. 14A, Semaki, Yogyakarta<br><a href="tel:0274555836">(0274) 555836</a></div>
+ </div>
+ <p class="mb-0 mt-3 small text-secondary">Nomor di atas dari buletin dan dokumen resmi BPBD DIY. BPBD Kabupaten Sleman: <a href="tel:0274868504">(0274) 868504</a> (dari direktori pihak ketiga). Untuk BPBD Bantul, Kulon Progo, Gunungkidul, dan Kota Yogyakarta, lihat <a href="https://bpbd.jogjaprov.go.id" target="_blank" rel="noopener">bpbd.jogjaprov.go.id</a> dan pastikan nomor terbaru sebelum disimpan.</p></div>
+</div></section>
+
+<section class="container mb-5"><div class="cta p-5 d-flex justify-content-between align-items-center flex-wrap gap-3">
+ <div><h3 class="text-white mb-1">Siap menghadapi musim hujan?</h3><p class="text-white-50 mb-0">Mulai dari tas siaga dan jalur evakuasi keluarga.</p></div><a href="#mitigasi" class="btn btn-light btn-lg">Mulai Bersiap</a>
+</div></section>
+
+<footer class="footer"><div class="container">
+ <div class="row g-4 pb-4">
+  <div class="col-lg-5"><h5 class="text-white"><i class="bi bi-droplet-half me-2"></i>SIMB DIY</h5><p>Sistem Informasi Mitigasi Banjir Daerah Istimewa Yogyakarta. Informasi sederhana agar warga lebih siap dan tangguh menghadapi banjir.</p></div>
+  <div class="col-6 col-lg-3"><h6 class="text-white">Tautan</h6><ul class="list-unstyled"><li><a href="#intro">Mengenal Banjir</a></li><li><a href="#mitigasi">Mitigasi</a></li><li><a href="#artikel">Artikel</a></li><li><a href="#statistik">Statistik</a></li></ul></div>
+  <div class="col-6 col-lg-4"><h6 class="text-white">Sumber resmi</h6><ul class="list-unstyled"><li><a href="https://bpbd.jogjaprov.go.id" target="_blank" rel="noopener">BPBD DIY</a></li><li><a href="https://bnpb.go.id" target="_blank" rel="noopener">BNPB</a></li><li><a href="https://www.bmkg.go.id" target="_blank" rel="noopener">BMKG</a></li><li><a href="https://dibi.bnpb.go.id" target="_blank" rel="noopener">DIBI BNPB</a></li></ul></div>
+ </div>
+ <div class="border-top border-secondary pt-3 small">© 2026 SIMB. Informasi bersifat edukatif; ikuti arahan resmi petugas saat bencana.</div>
+</div></footer>
+
+<div class="modal fade" id="modal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4">
+ <div class="modal-header border-0"><h5 class="modal-title" id="mTitle"></h5><button class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button></div>
+ <div class="modal-body pt-0" id="mBody"></div></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="data/berita.js"></script>
+<script src="script.js"></script>
+</body></html>
