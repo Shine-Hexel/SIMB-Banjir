@@ -9,7 +9,7 @@
   <style>
     body {
       background: #eaf1fb;
-      font-family: system-ui, sans-serif
+      font-family: system-ui, sans-serif;
     }
 
     .box {
@@ -17,7 +17,7 @@
       margin: 32px auto;
       background: #fff;
       border-radius: 16px;
-      padding: 28px
+      padding: 28px;
     }
   </style>
 </head>
@@ -25,43 +25,100 @@
 <body>
   <div class="box">
     <h1 class="h4">Editor Berita</h1>
-    <p class="text-secondary small">Isi form, klik <b>Buat kode</b>, lalu tempel hasilnya di paling atas daftar
-      <code>window.BERITA = [</code> pada <code>data/berita.js</code>. Simpan, kirim ke tim (Git/Drive), selesai.</p>
+    <p class="text-secondary small">
+      Isi form, klik <b>Buat kode</b>, lalu tempel hasilnya di paling atas daftar
+      <code>window.BERITA = [</code> pada <code>data/berita.js</code>.
+      Simpan, kirim ke tim (Git/Drive), selesai.
+    </p>
+
     <div class="row g-3">
-      <div class="col-12"><label class="form-label fw-bold">Judul</label><input id="judul" class="form-control"></div>
-      <div class="col-md-6"><label class="form-label fw-bold">Kategori</label><select id="kategori" class="form-select">
+      <div class="col-12">
+        <label class="form-label fw-bold" for="judul">Judul</label>
+        <input id="judul" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label fw-bold" for="kategori">Kategori</label>
+        <select id="kategori" class="form-select">
           <option>Kejadian</option>
           <option>Edukasi</option>
           <option>Lingkungan</option>
           <option>Persiapan</option>
           <option>Kesehatan</option>
-        </select></div>
-      <div class="col-md-6"><label class="form-label fw-bold">Tanggal</label><input id="tanggal" type="date"
-          class="form-control"></div>
-      <div class="col-12"><label class="form-label fw-bold">Isi (baris kosong = paragraf baru)</label><textarea id="isi"
-          rows="6" class="form-control"></textarea></div>
-      <div class="col-md-5"><label class="form-label">Nama sumber</label><input id="sumber" class="form-control"
-          placeholder="BPBD DIY"></div>
-      <div class="col-md-7"><label class="form-label">Tautan sumber</label><input id="url" class="form-control"
-          placeholder="https://"></div>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label fw-bold" for="tanggal">Tanggal</label>
+        <input id="tanggal" type="date" class="form-control">
+      </div>
+      <div class="col-12">
+        <label class="form-label fw-bold" for="isi">Isi</label>
+        <textarea id="isi" rows="6" class="form-control"></textarea>
+      </div>
+      <div class="col-md-5">
+        <label class="form-label" for="sumber">Nama sumber</label>
+        <input id="sumber" class="form-control" placeholder="BPBD DIY">
+      </div>
+      <div class="col-md-7">
+        <label class="form-label" for="url">Tautan sumber</label>
+        <input id="url" type="url" class="form-control" placeholder="https://">
+      </div>
     </div>
-    <button id="buat" class="btn btn-primary mt-3">Buat kode</button>
+
+    <button id="buat" type="button" class="btn btn-primary mt-3">Buat kode</button>
+    <div id="pesan" class="small text-danger mt-2" role="alert"></div>
+
     <textarea id="hasil" rows="9" class="form-control mt-3 font-monospace small" readonly
-      placeholder="Hasil muncul di sini"></textarea>
-    <button id="salin" class="btn btn-outline-secondary btn-sm mt-2">Salin</button> <span id="ok"
-      class="small text-success"></span>
+      placeholder="Hasil muncul di sini" aria-label="Hasil kode"></textarea>
+    <button id="salin" type="button" class="btn btn-outline-secondary btn-sm mt-2">Salin</button>
+    <span id="ok" class="small text-success" role="status"></span>
   </div>
+
   <script>
-    const $ = id => document.getElementById(id);
-    $('tanggal').value = new Date().toISOString().slice(0, 10);
-    $('buat').onclick = () => {
-      if (!$('judul').value.trim() || !$('isi').value.trim()) return alert('Judul dan isi wajib diisi.');
-      const o = { kategori: $('kategori').value, judul: $('judul').value.trim(), isi: $('isi').value.trim().replace(/\n{2,}/g, '\n\n'), tanggal: $('tanggal').value };
-      if ($('sumber').value.trim()) o.sumber = $('sumber').value.trim();
-      if ($('url').value.trim()) o.url = $('url').value.trim();
-      $('hasil').value = JSON.stringify(o, null, 2) + ',';
+    const $ = (id) => document.getElementById(id);
+
+    // Tanggal hari ini memakai zona waktu lokal (toISOString memakai UTC, bisa meleset sehari)
+    const hariIni = () => {
+      const d = new Date();
+      const dua = (n) => String(n).padStart(2, "0");
+      return `${d.getFullYear()}-${dua(d.getMonth() + 1)}-${dua(d.getDate())}`;
     };
-    $('salin').onclick = () => { $('hasil').select(); navigator.clipboard.writeText($('hasil').value).then(() => { $('ok').textContent = 'Tersalin' }) };
+    $("tanggal").value = hariIni();
+
+    $("buat").addEventListener("click", () => {
+      const judul = $("judul").value.trim();
+      const isi = $("isi").value.trim();
+      const url = $("url").value.trim();
+
+      if (!judul || !isi) return ($("pesan").textContent = "Judul dan isi wajib diisi.");
+      if (url && !/^https?:\/\//i.test(url)) return ($("pesan").textContent = "Tautan harus diawali http:// atau https://");
+      $("pesan").textContent = "";
+      $("ok").textContent = "";
+
+      const berita = {
+        kategori: $("kategori").value,
+        judul,
+        // Seragamkan baris baru (Windows \r\n -> \n), maksimal satu baris kosong antar paragraf
+        isi: isi.replace(/\r\n/g, "\n").replace(/\n{2,}/g, "\n\n"),
+        tanggal: $("tanggal").value || hariIni(),
+      };
+      if ($("sumber").value.trim()) berita.sumber = $("sumber").value.trim();
+      if (url) berita.url = url;
+
+      // Diakhiri koma supaya bisa langsung ditempel di dalam array BERITA
+      $("hasil").value = JSON.stringify(berita, null, 2) + ",";
+    });
+
+    $("salin").addEventListener("click", async () => {
+      const teks = $("hasil").value;
+      if (!teks) return;
+      $("hasil").select();
+      try {
+        await navigator.clipboard.writeText(teks);
+        $("ok").textContent = "Tersalin";
+      } catch {
+        $("ok").textContent = "Gagal menyalin otomatis, tekan Ctrl+C.";
+      }
+    });
   </script>
 </body>
 

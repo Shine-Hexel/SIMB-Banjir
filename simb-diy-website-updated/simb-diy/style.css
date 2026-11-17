@@ -1,21 +1,34 @@
+/* =============================================================
+   SIMB DIY – style.css
+   Urutan: variabel -> dasar -> komponen umum -> bagian halaman -> responsif
+   ============================================================= */
+
+/* ---------- Variabel warna & font ---------- */
 :root {
   --brand: #1b4b8f;
   --brand2: #0c2a57;
   --navy: #071a36;
   --soft: #eaf1fb;
   --ink: #0f1b2e;
-  --bs-body-font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --muted: #55657c;
+  --line: #dde6f2;
+  --sky: #7cc4ff;
+  --danger: #b3342a;
+  --font: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --bs-body-font-family: var(--font);
+}
+
+/* ---------- Dasar ---------- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* supaya judul tidak tertutup navbar saat lompat ke #anchor */
 }
 body {
-  font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+  font-family: var(--font);
   font-size: 17px;
   line-height: 1.7;
   letter-spacing: 0.01em;
   color: var(--ink);
-}
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px;
 }
 h1,
 h2,
@@ -23,21 +36,38 @@ h3,
 h4,
 h5,
 h6,
-.navbar-brand,
-.btn {
-  font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+.navbar-brand {
+  font-family: var(--font);
   font-weight: 700;
 }
 h1,
 h2 {
-  font-weight: 700;
   letter-spacing: -0.01em;
 }
 .container {
   max-width: 1200px;
 }
+
+/* Fokus keyboard yang jelas (aksesibilitas) */
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 2px;
+}
+
+/* ---------- Komponen umum ---------- */
 .text-brand {
   color: var(--brand);
+}
+.accent {
+  color: var(--sky);
+}
+.btn {
+  font-family: var(--font);
+  font-weight: 700;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
 }
 .btn-brand {
   background: var(--brand);
@@ -64,9 +94,69 @@ h2 {
 .eyebrow.dark {
   color: var(--brand);
 }
-.accent {
-  color: #7cc4ff;
+.section {
+  padding: 88px 0;
 }
+.title {
+  font-size: 2.1rem;
+  margin: 10px 0 18px;
+}
+.card-soft {
+  background: var(--soft);
+  border-radius: 16px;
+}
+.band {
+  background: linear-gradient(135deg, var(--brand2), var(--brand));
+  color: #fff;
+  border-radius: 20px;
+}
+.shadow-soft {
+  box-shadow: 0 12px 40px rgba(12, 42, 87, 0.15);
+}
+.progress {
+  height: 8px;
+}
+.progress-bar {
+  background: var(--sky);
+}
+#ckBar {
+  width: 0; /* lebar awal; diisi oleh script.js */
+}
+
+/* ---------- Bilah darurat & peringatan dini ---------- */
+.sos {
+  background: var(--danger);
+  color: #fff;
+  padding: 8px 0;
+  font-size: 0.95rem;
+}
+.sos a {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: underline;
+}
+.alert-bar {
+  padding: 8px 0;
+  font-size: 0.92rem;
+  color: #fff;
+  background: #b88308; /* level "waspada" (bawaan) */
+}
+.alert-bar.lv-siaga {
+  background: #c25e12;
+}
+.alert-bar.lv-awas {
+  background: var(--danger);
+}
+.alert-bar .container {
+  text-align: center;
+}
+.alert-bar a {
+  color: #fff;
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+/* ---------- Hero & foto ---------- */
 .hero {
   background: linear-gradient(120deg, var(--brand2), var(--brand) 60%, #2563b0);
   padding: 56px 0 110px;
@@ -84,6 +174,12 @@ h2 {
   min-height: 260px;
   background-image: url(img/intro.svg);
 }
+.photo-tas {
+  min-height: 320px;
+  background-image: url(img/tas-siaga.svg);
+}
+
+/* ---------- Kartu statistik melayang di bawah hero ---------- */
 .stat-float {
   background: #fff;
   border-radius: 16px;
@@ -93,7 +189,7 @@ h2 {
   position: relative;
 }
 .stat-float > div {
-  border-right: 1px solid #dde6f2;
+  border-right: 1px solid var(--line);
   padding: 0 10px;
 }
 .stat-float > div:last-child {
@@ -105,25 +201,16 @@ h2 {
   display: block;
 }
 .stat-float b {
-  font: 700 1.8rem "Atkinson Hyperlegible";
+  font: 700 1.8rem/normal var(--font);
   display: block;
   font-variant-numeric: tabular-nums;
 }
 .stat-float span {
   font-size: 0.85rem;
-  color: #55657c;
+  color: var(--muted);
 }
-.section {
-  padding: 88px 0;
-}
-.title {
-  font-size: 2.1rem;
-  margin: 10px 0 18px;
-}
-.card-soft {
-  background: var(--soft);
-  border-radius: 16px;
-}
+
+/* ---------- Mengenal banjir (tab) ---------- */
 .nav-pills .nav-link {
   border: 1px solid #cfdcee;
   border-radius: 999px;
@@ -135,9 +222,11 @@ h2 {
   border-color: var(--brand);
   color: #fff;
 }
+
+/* ---------- Mitigasi ---------- */
 .tahap {
   background: #fff;
-  border: 1px solid #dde6f2;
+  border: 1px solid var(--line);
   border-radius: 16px;
   padding: 28px;
   height: 100%;
@@ -161,14 +250,8 @@ h2 {
 .tahap li {
   margin-bottom: 8px;
 }
-.band {
-  background: linear-gradient(135deg, var(--brand2), var(--brand));
-  color: #fff;
-  border-radius: 20px;
-}
-.shadow-soft {
-  box-shadow: 0 12px 40px rgba(12, 42, 87, 0.15);
-}
+
+/* Tingkat kewaspadaan */
 .level {
   border-radius: 16px;
   padding: 22px;
@@ -192,8 +275,10 @@ h2 {
   background: #c25e12;
 }
 .lv3 {
-  background: #b3342a;
+  background: var(--danger);
 }
+
+/* Checklist tas siaga */
 .form-check {
   margin-bottom: 8px;
   font-size: 0.95rem;
@@ -202,45 +287,11 @@ h2 {
   background-color: #3b82f6;
   border-color: #3b82f6;
 }
-.art {
-  background: #fff;
-  border: 1px solid #dde6f2;
-  border-radius: 16px;
-  overflow: hidden;
-  height: 100%;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.art:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(12, 42, 87, 0.12);
-}
-.art .th {
-  height: 140px;
-  display: grid;
-  place-items: center;
-  font-size: 2.6rem;
-  color: var(--brand);
-  background: linear-gradient(135deg, #dce9fa, #bcd4f2);
-}
-.art .bd {
-  padding: 18px;
-}
-.art small {
-  color: var(--brand);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 0.72rem;
-}
-.art h5 {
-  font-size: 1.02rem;
-  margin: 6px 0 8px;
-}
-.art p {
-  font-size: 0.88rem;
-  color: #55657c;
-  margin: 0;
+
+/* ---------- Berita ---------- */
+.cari {
+  width: 190px;
+  border-radius: 999px;
 }
 .filter-btn {
   border: 1px solid #cfdcee;
@@ -254,6 +305,61 @@ h2 {
   color: #fff;
   border-color: var(--brand);
 }
+.art {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  height: 100%;
+  transition: 0.2s;
+}
+.art:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(12, 42, 87, 0.12);
+}
+.art .th {
+  height: 140px;
+  display: grid;
+  place-items: center;
+  font-size: 2.6rem;
+  color: var(--brand);
+  background: linear-gradient(135deg, #dce9fa, #bcd4f2);
+}
+.art .bd {
+  padding: 18px;
+  min-height: 260px;
+}
+.art small {
+  display: block;
+  color: var(--brand);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+}
+.art h5 {
+  font-size: 1.02rem;
+  margin: 6px 0 8px;
+}
+.art p {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+}
+.art .bd .btn {
+  align-self: flex-start;
+}
+
+/* ---------- Peta ---------- */
+.map {
+  height: 460px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  z-index: 0; /* agar peta tidak menutupi navbar sticky */
+}
+
+/* ---------- Statistik ---------- */
 .stat-band {
   background: linear-gradient(135deg, var(--navy), #0f3470);
   padding: 88px 0;
@@ -265,37 +371,41 @@ h2 {
 }
 .glass .big {
   display: block;
-  font: 700 2.2rem "Atkinson Hyperlegible";
-  color: #7cc4ff;
+  font: 700 2.2rem/normal var(--font);
+  color: var(--sky);
 }
 .glass span {
   color: #cfdcf0;
   font-size: 0.9rem;
 }
+
+/* Grafik kolom */
 .chart {
   display: flex;
   align-items: flex-end;
-  gap: 14px;
+  gap: 28px;
   height: 240px;
 }
 .chart div {
   flex: 1;
-  text-align: center;
-  color: #cfdcf0;
-  font-size: 0.78rem;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  height: 100%;
+  text-align: center;
+  color: #cfdcf0;
+  font-size: 0.78rem;
   font-variant-numeric: tabular-nums;
 }
 .chart span {
   display: block;
-  background: linear-gradient(#7cc4ff, #3b82f6);
+  background: linear-gradient(var(--sky), #3b82f6);
   border-radius: 8px 8px 0 0;
   margin: 6px 0;
-  transition: height 1s;
+  transition: height 1s; /* kolom "naik" saat tinggi diubah oleh script.js */
 }
+
+/* Grafik batang per wilayah */
 .bar-row {
   color: #cfdcf0;
   font-size: 0.9rem;
@@ -314,16 +424,18 @@ h2 {
 .bar-row i {
   display: block;
   height: 100%;
-  background: #7cc4ff;
+  background: var(--sky);
   border-radius: 9px;
 }
+
+/* ---------- FAQ & sumber resmi ---------- */
 .accordion-button:not(.collapsed) {
   background: var(--soft);
   color: var(--brand);
 }
 .src {
   background: #fff;
-  border: 1px solid #dde6f2;
+  border: 1px solid var(--line);
   border-radius: 14px;
   padding: 16px 18px;
   display: flex;
@@ -339,17 +451,25 @@ h2 {
   font-size: 1.5rem;
   color: var(--brand);
 }
-.src p {
-  margin: 0;
-  font-size: 0.85rem;
-  color: #55657c;
-}
 .src h6 {
   margin: 0;
 }
+.src p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ---------- Form lapor ---------- */
+#lapor-form .form-label {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+/* ---------- Kontak darurat ---------- */
 .kontak {
   background: #fff;
-  border: 1px solid #dde6f2;
+  border: 1px solid var(--line);
   border-radius: 16px;
   padding: 22px;
   display: flex;
@@ -374,15 +494,20 @@ h2 {
 .kontak p {
   margin: 0;
   font-size: 0.85rem;
-  color: #55657c;
+  color: var(--muted);
 }
 .kontak a.no {
   margin-left: auto;
-  font: 700 1.7rem "Atkinson Hyperlegible";
-  color: #b3342a;
+  font: 700 2rem/normal var(--font);
+  color: var(--danger);
   text-decoration: none;
   font-variant-numeric: tabular-nums;
 }
+.kontak a.no:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Ajakan (CTA) & footer ---------- */
 .cta {
   background: linear-gradient(120deg, var(--brand2), var(--brand));
   border-radius: 20px;
@@ -400,6 +525,8 @@ h2 {
 .footer a:hover {
   color: #fff;
 }
+
+/* ---------- Responsif ---------- */
 @media (max-width: 991px) {
   .stat-float > div {
     border: 0;
@@ -412,6 +539,8 @@ h2 {
     padding-bottom: 90px;
   }
 }
+
+/* Hormati pengguna yang mematikan animasi di sistemnya */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -419,93 +548,4 @@ h2 {
   * {
     transition: none !important;
   }
-}
-
-.map {
-  height: 460px;
-  border-radius: 16px;
-  border: 1px solid #dde6f2;
-  z-index: 0;
-}
-.chart {
-  gap: 28px;
-}
-.progress-bar {
-  background: #7cc4ff;
-}
-.kontak a.no {
-  font-size: 2rem;
-}
-.kontak a.no:hover {
-  text-decoration: underline;
-}
-.sos {
-  background: #b3342a;
-  color: #fff;
-  padding: 8px 0;
-  font-size: 0.95rem;
-}
-.sos a {
-  color: #fff;
-  font-weight: 700;
-  text-decoration: underline;
-}
-a:focus-visible,
-button:focus-visible,
-.btn:focus-visible {
-  outline: 3px solid #7cc4ff;
-  outline-offset: 2px;
-}
-.btn {
-  padding-top: 0.7rem;
-  padding-bottom: 0.7rem;
-}
-
-.alert-bar {
-  padding: 8px 0;
-  font-size: 0.92rem;
-  color: #fff;
-  background: #b88308;
-}
-.alert-bar.lv-siaga {
-  background: #c25e12;
-}
-.alert-bar.lv-awas {
-  background: #b3342a;
-}
-.alert-bar .container {
-  text-align: center;
-}
-.alert-bar a {
-  color: #fff;
-  font-weight: 700;
-  margin-left: 6px;
-}
-.cari {
-  width: 190px;
-  border-radius: 999px;
-}
-.art small {
-  display: block;
-}
-#lapor-form .form-label {
-  font-size: 0.9rem;
-  margin-bottom: 4px;
-}
-
-/* Berita: tautan langsung ke penerbit */
-.art {
-  cursor: default;
-}
-.art:hover {
-  transform: translateY(-3px);
-}
-.art .bd {
-  min-height: 260px;
-}
-.art .bd p {
-  line-height: 1.55;
-}
-.art .bd .btn {
-  align-self: flex-start;
 }
