@@ -665,40 +665,45 @@ function initAnimasi() {
 
 /* ---------- 3.8 Peta (Leaflet) ---------- */
 function initPeta() {
-  if (!window.L) return; // pustaka Leaflet gagal dimuat (mis. offline): lewati peta
+  if (!window.L) return;
 
-  const peta = L.map("map", { scrollWheelZoom: false }).setView(
-    [-7.88, 110.38],
-    10,
-  );
+  var map = L.map("map").setView([-7.7956, 110.3695], 11);
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png? api_key=eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfNWc0Ym05ZXgiLCJqdGkiOiIwZGVhMTVjOTQ5MTBjZTliY2UxNjMyNTIwMmY2M2VhMCJ9.O2yT9H10FJtzH-TeAT_GVxex394-Amyc6gaopxLVqPI", {
-    maxZoom: 19,
+  
+  L.tileLayer("https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png", {
+    maxZoom: 20,
     attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
+  setTimeout(function () {
+    map.invalidateSize();
+  }, 200);
+
   // Lingkaran per wilayah: makin banyak kejadian, makin besar
-  BANJIR_DES_2025.forEach((d) =>
-    L.circleMarker([d.lat, d.lng], {
-      radius: 8 + d.jumlah * 1.1,
-      color: "#1b4b8f",
-      fillColor: "#7cc4ff",
-      fillOpacity: 0.6,
-    })
-      .addTo(peta)
-      .bindPopup(
-        `<b>${d.wilayah}</b><br>${d.jumlah} kejadian banjir (Desember 2025)`,
-      ),
-  );
+  if (typeof BANJIR_DES_2025 !== "undefined") {
+    BANJIR_DES_2025.forEach((d) =>
+      L.circleMarker([d.lat, d.lng], {
+        radius: 8 + d.jumlah * 1.1,
+        color: "#1b4b8f",
+        fillColor: "#7cc4ff",
+        fillOpacity: 0.6,
+      })
+        .addTo(map) 
+        .bindPopup(
+          `<b>${d.wilayah}</b><br>${d.jumlah} kejadian banjir (Desember 2025)`,
+        ),
+    );
+  }
 
   L.marker([-7.9355, 110.39])
-    .addTo(peta)
+    .addTo(map)
     .bindPopup(
       "<b>Imogiri, Bantul</b><br>Masuk peta rawan banjir BPBD DIY 2025",
     );
+
   L.marker([-7.789, 110.389])
-    .addTo(peta)
+    .addTo(map) 
     .bindPopup(
       "<b>BPBD DIY (Pusdalops)</b><br>Jl. Kenari No. 14A, Semaki (perkiraan lokasi)",
     );
