@@ -16,8 +16,15 @@
 const $ = (id) => document.getElementById(id);
 
 // Mencegah XSS: mengubah karakter HTML berbahaya menjadi teks biasa
-const ESC_MAP = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
-const escapeHTML = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ESC_MAP[c]);
+const ESC_MAP = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;",
+};
+const escapeHTML = (s) =>
+  String(s ?? "").replace(/[&<>"']/g, (c) => ESC_MAP[c]);
 
 // Hanya izinkan tautan http/https (menolak "javascript:" dan sejenisnya)
 const urlAman = (u) => (/^https?:\/\//i.test(u || "") ? u : "");
@@ -27,7 +34,11 @@ const ul = (items) => `<ul>${items.map((x) => `<li>${x}</li>`).join("")}</ul>`;
 
 // Date -> "17 November 2026"
 const formatTanggal = (date) =>
-  date.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+  date.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
 // Date -> "2026-11-17" memakai zona waktu lokal (toISOString memakai UTC, bisa meleset sehari)
 const toISODate = (d) => {
@@ -35,7 +46,9 @@ const toISODate = (d) => {
   return `${d.getFullYear()}-${dua(d.getMonth() + 1)}-${dua(d.getDate())}`;
 };
 
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const prefersReducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)",
+).matches;
 
 /* =============================================================
    2. DATA STATIS
@@ -170,21 +183,81 @@ const FAQ = [
 ];
 
 const SUMBER_RESMI = [
-  { nama: "BPBD DIY", ket: "Pusdalops dan informasi kebencanaan DIY", url: "https://bpbd.jogjaprov.go.id", ikon: "bi-geo-alt" },
-  { nama: "BNPB", ket: "Badan Nasional Penanggulangan Bencana", url: "https://bnpb.go.id", ikon: "bi-shield-check" },
-  { nama: "DIBI BNPB", ket: "Data Informasi Bencana Indonesia", url: "https://dibi.bnpb.go.id", ikon: "bi-bar-chart" },
-  { nama: "BMKG", ket: "Prakiraan cuaca dan peringatan dini", url: "https://www.bmkg.go.id", ikon: "bi-cloud-rain-heavy" },
-  { nama: "InaRISK", ket: "Peta risiko bencana BNPB", url: "https://inarisk.bnpb.go.id", ikon: "bi-map" },
+  {
+    nama: "BPBD DIY",
+    ket: "Pusdalops dan informasi kebencanaan DIY",
+    url: "https://bpbd.jogjaprov.go.id",
+    ikon: "bi-geo-alt",
+  },
+  {
+    nama: "BNPB",
+    ket: "Badan Nasional Penanggulangan Bencana",
+    url: "https://bnpb.go.id",
+    ikon: "bi-shield-check",
+  },
+  {
+    nama: "DIBI BNPB",
+    ket: "Data Informasi Bencana Indonesia",
+    url: "https://dibi.bnpb.go.id",
+    ikon: "bi-bar-chart",
+  },
+  {
+    nama: "BMKG",
+    ket: "Prakiraan cuaca dan peringatan dini",
+    url: "https://www.bmkg.go.id",
+    ikon: "bi-cloud-rain-heavy",
+  },
+  {
+    nama: "InaRISK",
+    ket: "Peta risiko bencana BNPB",
+    url: "https://inarisk.bnpb.go.id",
+    ikon: "bi-map",
+  },
 ];
 
 const KONTAK_DARURAT = [
-  { nama: "Panggilan Darurat", ket: "Layanan darurat terpadu", nomor: "112", ikon: "bi-broadcast" },
-  { nama: "BNPB", ket: "Penanggulangan bencana", nomor: "117", ikon: "bi-shield-check" },
-  { nama: "Basarnas", ket: "Pencarian dan pertolongan", nomor: "115", ikon: "bi-life-preserver" },
-  { nama: "Ambulans", ket: "Gawat darurat medis", nomor: "119", ikon: "bi-heart-pulse" },
-  { nama: "Polisi", ket: "Keamanan dan evakuasi", nomor: "110", ikon: "bi-person-badge" },
-  { nama: "Damkar", ket: "Pemadam dan penyelamatan", nomor: "113", ikon: "bi-fire" },
-  { nama: "PLN", ket: "Gangguan listrik", nomor: "123", ikon: "bi-lightning-charge" },
+  {
+    nama: "Panggilan Darurat",
+    ket: "Layanan darurat terpadu",
+    nomor: "112",
+    ikon: "bi-broadcast",
+  },
+  {
+    nama: "BNPB",
+    ket: "Penanggulangan bencana",
+    nomor: "117",
+    ikon: "bi-shield-check",
+  },
+  {
+    nama: "Basarnas",
+    ket: "Pencarian dan pertolongan",
+    nomor: "115",
+    ikon: "bi-life-preserver",
+  },
+  {
+    nama: "Ambulans",
+    ket: "Gawat darurat medis",
+    nomor: "119",
+    ikon: "bi-heart-pulse",
+  },
+  {
+    nama: "Polisi",
+    ket: "Keamanan dan evakuasi",
+    nomor: "110",
+    ikon: "bi-person-badge",
+  },
+  {
+    nama: "Damkar",
+    ket: "Pemadam dan penyelamatan",
+    nomor: "113",
+    ikon: "bi-fire",
+  },
+  {
+    nama: "PLN",
+    ket: "Gangguan listrik",
+    nomor: "123",
+    ikon: "bi-lightning-charge",
+  },
 ];
 
 // Ikon bawaan per kategori, dipakai bila berita tidak menulis "ikon" sendiri
@@ -213,7 +286,9 @@ function renderIntro() {
     btn.className = "nav-link" + (i === 0 ? " active" : "");
     btn.textContent = nama;
     btn.addEventListener("click", () => {
-      tabs.querySelectorAll(".nav-link").forEach((x) => x.classList.remove("active"));
+      tabs
+        .querySelectorAll(".nav-link")
+        .forEach((x) => x.classList.remove("active"));
       btn.classList.add("active");
       body.innerHTML = isi;
     });
@@ -255,7 +330,8 @@ function perbaruiChecklist() {
   const dicentang = kotak.filter((x) => x.checked).length;
 
   $("ckBar").style.width = `${(dicentang / CHECKLIST_TAS_SIAGA.length) * 100}%`;
-  $("ckText").textContent = `${dicentang} dari ${CHECKLIST_TAS_SIAGA.length} item sudah disiapkan`;
+  $("ckText").textContent =
+    `${dicentang} dari ${CHECKLIST_TAS_SIAGA.length} item sudah disiapkan`;
 
   try {
     const indeks = kotak.flatMap((x, i) => (x.checked ? [i] : []));
@@ -290,7 +366,10 @@ const NEWS_TIMEOUT_MS = 10 * 1000; // batalkan bila layanan feed tidak menjawab
 const NEWS_MAX_ITEM = 12;
 const EXCERPT_MAX = 150;
 
-const beritaLokal = (window.BERITA || []).map((b) => ({ ...b, jenis: "Lokal" }));
+const beritaLokal = (window.BERITA || []).map((b) => ({
+  ...b,
+  jenis: "Lokal",
+}));
 const berita = {
   semua: beritaLokal.slice(), // daftar yang sedang dipakai (lokal, atau feed + lokal)
   kategori: "Semua", // filter kategori aktif
@@ -326,10 +405,15 @@ function kartuBerita(a) {
   const kategori = kategoriDari(a);
   const ikon = a.ikon || IKON_KATEGORI[kategori] || "bi-newspaper";
   // Rapatkan baris baru / spasi ganda, lalu potong untuk cuplikan
-  const isi = (a.isi || a.deskripsi || "Buka tautan untuk membaca informasi selengkapnya.")
+  const isi = (
+    a.isi ||
+    a.deskripsi ||
+    "Buka tautan untuk membaca informasi selengkapnya."
+  )
     .replace(/\s+/g, " ")
     .trim();
-  const cuplikan = isi.slice(0, EXCERPT_MAX) + (isi.length > EXCERPT_MAX ? "…" : "");
+  const cuplikan =
+    isi.slice(0, EXCERPT_MAX) + (isi.length > EXCERPT_MAX ? "…" : "");
   const url = urlAman(a.url);
 
   const aksi = url
@@ -355,7 +439,8 @@ function kartuBerita(a) {
 
 function renderKartu() {
   const tampil = berita.semua.filter((a) => {
-    const cocokKategori = berita.kategori === "Semua" || kategoriDari(a) === berita.kategori;
+    const cocokKategori =
+      berita.kategori === "Semua" || kategoriDari(a) === berita.kategori;
     const teks = `${a.judul || ""} ${a.isi || ""}`.toLowerCase();
     return cocokKategori && teks.includes(berita.kata);
   });
@@ -386,7 +471,10 @@ function itemFeedKeBerita(item) {
     ikon: "bi-newspaper",
     // Judul Google News berakhiran " - Nama Media"; bagian itu dibuang karena sudah ada di "sumber"
     judul: (item.title || "").replace(/\s+-\s+[^-]+$/, "").trim(),
-    isi: (item.description || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(),
+    isi: (item.description || "")
+      .replace(/<[^>]*>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim(),
     tanggal: toISODate(isNaN(tgl) ? new Date() : tgl),
     sumber: penerbit,
     url: link,
@@ -424,11 +512,15 @@ async function refreshNews() {
   const timer = setTimeout(() => pengendali.abort(), NEWS_TIMEOUT_MS);
 
   try {
-    const respons = await fetch(endpoint, { cache: "no-store", signal: pengendali.signal });
+    const respons = await fetch(endpoint, {
+      cache: "no-store",
+      signal: pengendali.signal,
+    });
     if (!respons.ok) throw new Error("Layanan feed tidak merespons");
 
     const data = await respons.json();
-    if (data.status !== "ok" || !Array.isArray(data.items)) throw new Error("Format feed tidak sesuai");
+    if (data.status !== "ok" || !Array.isArray(data.items))
+      throw new Error("Format feed tidak sesuai");
 
     const baru = data.items
       .slice(0, NEWS_MAX_ITEM)
@@ -439,7 +531,10 @@ async function refreshNews() {
     berita.semua = gabungTanpaDuplikat(baru, beritaLokal).sort(urutTerbaru);
     renderBerita();
 
-    const jam = new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
+    const jam = new Date().toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
     status.textContent = `Diperbarui ${jam} · ${baru.length} berita terbaru ditemukan`;
   } catch {
     // Gagal (jaringan / CORS / timeout): tetap tampilkan berita lokal
@@ -563,18 +658,25 @@ function initAnimasi() {
     },
     { threshold: 0.4 }, // jalankan saat 40% elemen terlihat
   );
-  document.querySelectorAll("[data-count],[data-h]").forEach((el) => pengamat.observe(el));
+  document
+    .querySelectorAll("[data-count],[data-h]")
+    .forEach((el) => pengamat.observe(el));
 }
 
 /* ---------- 3.8 Peta (Leaflet) ---------- */
 function initPeta() {
   if (!window.L) return; // pustaka Leaflet gagal dimuat (mis. offline): lewati peta
 
-  const peta = L.map("map", { scrollWheelZoom: false }).setView([-7.88, 110.38], 10);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 18,
-    attribution: "&copy; OpenStreetMap",
-  }).addTo(peta);
+  const peta = L.map("map", { scrollWheelZoom: false }).setView(
+    [-7.88, 110.38],
+    10,
+  );
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png? api_key=eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfNWc0Ym05ZXgiLCJqdGkiOiIwZGVhMTVjOTQ5MTBjZTliY2UxNjMyNTIwMmY2M2VhMCJ9.O2yT9H10FJtzH-TeAT_GVxex394-Amyc6gaopxLVqPI", {
+    maxZoom: 19,
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
 
   // Lingkaran per wilayah: makin banyak kejadian, makin besar
   BANJIR_DES_2025.forEach((d) =>
@@ -585,15 +687,21 @@ function initPeta() {
       fillOpacity: 0.6,
     })
       .addTo(peta)
-      .bindPopup(`<b>${d.wilayah}</b><br>${d.jumlah} kejadian banjir (Desember 2025)`),
+      .bindPopup(
+        `<b>${d.wilayah}</b><br>${d.jumlah} kejadian banjir (Desember 2025)`,
+      ),
   );
 
   L.marker([-7.9355, 110.39])
     .addTo(peta)
-    .bindPopup("<b>Imogiri, Bantul</b><br>Masuk peta rawan banjir BPBD DIY 2025");
+    .bindPopup(
+      "<b>Imogiri, Bantul</b><br>Masuk peta rawan banjir BPBD DIY 2025",
+    );
   L.marker([-7.789, 110.389])
     .addTo(peta)
-    .bindPopup("<b>BPBD DIY (Pusdalops)</b><br>Jl. Kenari No. 14A, Semaki (perkiraan lokasi)");
+    .bindPopup(
+      "<b>BPBD DIY (Pusdalops)</b><br>Jl. Kenari No. 14A, Semaki (perkiraan lokasi)",
+    );
 }
 
 /* ---------- 3.9 Peringatan dini (diatur di data/berita.js) ---------- */
@@ -624,7 +732,8 @@ function initLapor() {
     if (!navigator.geolocation) return alert("Browser tidak mendukung lokasi.");
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
-        $("lokasi").value = `https://maps.google.com/?q=${coords.latitude.toFixed(6)},${coords.longitude.toFixed(6)}`;
+        $("lokasi").value =
+          `https://maps.google.com/?q=${coords.latitude.toFixed(6)},${coords.longitude.toFixed(6)}`;
       },
       () => alert("Lokasi tidak bisa diambil. Ketik manual saja."),
       { timeout: 10000 },
@@ -644,7 +753,11 @@ function initLapor() {
       `Pelapor: ${f.get("nama") || "-"}`,
     ].join("\n");
 
-    window.open(`https://wa.me/${NOMOR_WA_BPBD}?text=${encodeURIComponent(pesan)}`, "_blank", "noopener");
+    window.open(
+      `https://wa.me/${NOMOR_WA_BPBD}?text=${encodeURIComponent(pesan)}`,
+      "_blank",
+      "noopener",
+    );
   });
 }
 
