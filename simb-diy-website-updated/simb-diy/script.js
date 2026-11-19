@@ -1,5 +1,5 @@
 /* =============================================================
-   SIMB DIY – script.js
+   Siaga Banjir DIY – script.js
    Urutan file:
      1. Utilitas        – fungsi kecil yang dipakai di banyak tempat
      2. Data statis     – isi konten (intro, mitigasi, FAQ, kontak, statistik)
@@ -418,7 +418,7 @@ function kartuBerita(a) {
 
   const aksi = url
     ? `<a class="btn btn-brand btn-sm" href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">Baca berita asli <i class="bi bi-box-arrow-up-right ms-1"></i></a>`
-    : '<span class="small text-secondary">Artikel edukasi SIMB DIY</span>';
+    : '<span class="small text-secondary">Artikel edukasi Siaga Banjir DIY</span>';
   const sumber = a.sumber
     ? `<div class="small text-secondary mt-2">Sumber: ${escapeHTML(a.sumber)}</div>`
     : "";
@@ -750,7 +750,7 @@ function initLapor() {
     e.preventDefault();
     const f = new FormData(e.target);
     const pesan = [
-      "Lapor banjir (via SIMB DIY)",
+      "Lapor banjir (via Siaga Banjir DIY)",
       `Kab/kota: ${f.get("kab")}`,
       `Lokasi: ${f.get("lokasi")}`,
       `Tinggi air: ${f.get("tinggi")}`,
