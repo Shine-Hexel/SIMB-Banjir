@@ -139,9 +139,9 @@ const CHECKLIST_TAS_SIAGA = [
 
 // Jumlah kejadian bencana (semua jenis) di DIY per tahun – BPBD DIY
 const BENCANA_PER_TAHUN = [
-  { tahun: "2021", jumlah: 958 },
-  { tahun: "2022", jumlah: 1817 },
-  { tahun: "2023", jumlah: 1418 },
+  { tahun: "2024", jumlah: 3472 },
+  { tahun: "2025", jumlah: 4727 },
+  { tahun: "2026", jumlah: 2383 },
 ];
 
 // Banjir genangan & luapan sungai, Desember 2025.
