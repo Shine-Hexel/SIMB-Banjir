@@ -750,7 +750,7 @@ function initLapor() {
     e.preventDefault();
     const f = new FormData(e.target);
     const pesan = [
-      "Lapor banjir (via SIMB DIY)",
+      "Lapor banjir (via Siaga Banjir DIY)",
       `Kab/kota: ${f.get("kab")}`,
       `Lokasi: ${f.get("lokasi")}`,
       `Tinggi air: ${f.get("tinggi")}`,
